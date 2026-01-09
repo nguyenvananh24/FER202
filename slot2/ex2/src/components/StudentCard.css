@@ -1,0 +1,85 @@
+.student-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+    max-width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.student-avatar {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.student-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f0f0f0;
+    transition: border-color 0.3s ease;
+}
+
+.student-avatar img:hover {
+    border-color: #007bff;
+}
+
+.student-info {
+    text-align: center;
+}
+
+.student-name {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.student-details {
+    text-align: left;
+}
+
+.student-details p {
+    margin: 8px 0;
+    font-size: 1em;
+    color: #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.label {
+    font-weight: 600;
+    color: #333;
+}
+
+.grade {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
+.grade.excellent {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.grade.good {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.grade.average {
+    background-color: #f8d7da;
+    color: #721c24;
+}
