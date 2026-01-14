@@ -2,7 +2,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import About from './About';
 import listOfStudent from '../listOfStudent';
 
-// Component hiển thị danh sách sinh viên sử dụng React Bootstrap Grid - 3 người trên 1 dòng
 function StudentList() {
     return (
         <Container fluid style={{ 

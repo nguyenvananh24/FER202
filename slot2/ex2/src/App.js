@@ -6,5 +6,4 @@ function App() {
     <StudentList />   
   );
 }
-
 export default App;
