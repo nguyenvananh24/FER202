@@ -86,4 +86,9 @@ restStudents.map(({name, age, grade, id}) => {
     console.log(`Tên: ${name}, Tuổi: ${age}, Điểm: ${grade}, ID: ${id}`);
 }); 
 
-//thêm 1 student
+//thêm 1 student mới vào restStudents sử dụng pread operator
+const newStudent = {name: "linh", age: 19, grade: 9.2, id: 8};
+const newStudentList = [...restStudents, newStudent];
+newStudentList.map(({name, age, grade, id}) => {
+    console.log(`Tên: ${name}, Tuổi: ${age}, Điểm: ${grade}, ID: ${id}`);
+});
