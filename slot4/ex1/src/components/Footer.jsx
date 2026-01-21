@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Footer({myProfile = { 
   name: "Default User", 
   email: "user@example.com", 

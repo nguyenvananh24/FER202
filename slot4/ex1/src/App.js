@@ -1,26 +1,22 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './components/Header';
-import HeroCarousel from './components/HeroCarousel';
-import { banners } from './data/bannerData';
-import Footer from './components/Footer';
-import PizzaList from './pages/pizzaList';
-import Booking from './components/Booking';
+import Home from './pages/Home';
+import AboutUs from './pages/AboutUs.jsx';
+import Contact from './pages/Contact.jsx';
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <HeroCarousel banners={banners} />
-      <PizzaList />
-      <Booking />
-      <Footer myProfile={{
-        name: "Van Anh",
-        email: "vanhne@example.com",
-        avatar: "/images/avt.jpg"
-      }} />
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/contact" element={<Contact />} />s
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

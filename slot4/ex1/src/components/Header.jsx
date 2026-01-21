@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
   const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
 
   const handleSearch = (e) => {
     e.preventDefault();
     console.log('Searching for:', searchQuery);
-    // Add your search logic here
   };
 
-  // Inline styles
   const headerStyle = {
     position: 'sticky',
     top: 0,
@@ -82,44 +82,47 @@ function Header() {
     <header style={headerStyle}>
       <Navbar bg="dark" variant="dark" expand="lg" style={navbarStyle}>
         <Container fluid className="px-4" style={containerStyle}>
-          {/* Logo/Brand */}
-          <Navbar.Brand href="/" style={brandStyle}>
+          <Navbar.Brand 
+            as={Link}
+            to="/" 
+            style={brandStyle}
+          >
             Pizza House
           </Navbar.Brand>
 
-          {/* Toggle button for mobile */}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
           <Navbar.Collapse id="basic-navbar-nav">
-            {/* Navigation Links */}
             <Nav className="me-auto ms-5">
               <Nav.Link 
-                href="/" 
-                style={navLinkActiveStyle}
+                as={Link}
+                to="/" 
+                style={location.pathname === '/' ? navLinkActiveStyle : navLinkStyle}
                 onMouseEnter={(e) => e.target.style.color = navLinkHoverStyle.color}
-                onMouseLeave={(e) => e.target.style.color = navLinkActiveStyle.color}
+                onMouseLeave={(e) => e.target.style.color = location.pathname === '/' ? navLinkActiveStyle.color : navLinkStyle.color}
               >
                 Home
               </Nav.Link>
               <Nav.Link 
-                href="/about" 
-                style={navLinkStyle}
+                as={Link}
+                to="/about" 
+                style={location.pathname === '/about' ? navLinkActiveStyle : navLinkStyle}
                 onMouseEnter={(e) => e.target.style.color = navLinkHoverStyle.color}
-                onMouseLeave={(e) => e.target.style.color = navLinkStyle.color}
+                onMouseLeave={(e) => e.target.style.color = location.pathname === '/about' ? navLinkActiveStyle.color : navLinkStyle.color}
               >
                 About Us
               </Nav.Link>
               <Nav.Link 
-                href="/contact" 
-                style={navLinkStyle}
+                as={Link}
+                to="/contact" 
+                style={location.pathname === '/contact' ? navLinkActiveStyle : navLinkStyle}
                 onMouseEnter={(e) => e.target.style.color = navLinkHoverStyle.color}
-                onMouseLeave={(e) => e.target.style.color = navLinkStyle.color}
+                onMouseLeave={(e) => e.target.style.color = location.pathname === '/contact' ? navLinkActiveStyle.color : navLinkStyle.color}
               >
                 Contact
               </Nav.Link>
             </Nav>
 
-            {/* Search Form */}
             <Form className="d-flex" style={searchFormStyle} onSubmit={handleSearch}>
               <FormControl
                 type="search"

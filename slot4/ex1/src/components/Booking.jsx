@@ -2,7 +2,7 @@ import { Form, Button, Col, Row } from 'react-bootstrap';
 
 function BookingForm() {
     return (
-        <div className="booking-form justify-content-center mt-5">
+        <div className="booking-form justify-content-center mt-5" style={{maxWidth: "90%", margin: "0 auto"}}> 
             <h2 style={{ fontSize: "50px", textAlign: "center", color: "#FFFFFF", fontFamily: "'Times New Roman', Times, serif" }} >Book Your Table</h2>
             <Form>
                 <Row className="mb-3 justify-content-center">

@@ -3,11 +3,17 @@ import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
+import ViewDetailModal from './ViewDetailModal';
 
 function PizzaCard({ pizza }) {
     const [isHovered, setIsHovered] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
 
     return (
+        <>
         <Card className="h-100" style={{ 
             transition: 'box-shadow 0.3s ease', 
             boxShadow: isHovered ? '0 8px 16px rgba(0,0,0,0.2)' : 'none' 
@@ -66,10 +72,21 @@ function PizzaCard({ pizza }) {
                             ${pizza.price.toFixed(2)}
                         </span>
                     </div>
-                    <Button variant="dark" className="mt-2 w-100">Buy</Button>
+                    <div className="d-flex gap-2 mt-2">
+                        <Button variant="dark" className="flex-fill">Buy</Button>
+                        <Button variant="outline-dark" className="flex-fill" onClick={handleShow}>View Details</Button>
+                    </div>
                 </div>
             </Card.Body>
         </Card>
+
+        {/* ViewDetailModal Component */}
+        <ViewDetailModal 
+            show={showModal} 
+            handleClose={handleClose} 
+            pizza={pizza} 
+        />
+        </>
     );
 }
 
