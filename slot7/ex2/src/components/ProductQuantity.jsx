@@ -25,34 +25,67 @@ function ProductQuantity() {
   };
 
   return (
-    <Container className="mt-4">
-      <div className="mb-5">
-        <h3>Exercise 1: Chỉnh sửa số lượng sản phẩm</h3>
-        <Row className="align-items-center mt-3">
-          <Col md={3}>
-            <div className="d-flex align-items-center gap-2">
-              <Button variant="danger" onClick={handleDecrease}>
-                -
-              </Button>
-              <input
-                type="number"
-                className="form-control text-center"
-                style={{ width: '80px' }}
-                value={quantity}
-                onChange={handleInputChange}
-                min="0"
-              />
-              <Button variant="success" onClick={handleIncrease}>
-                +
-              </Button>
-            </div>
-          </Col>
-          <Col md={6}>
-            <p className="mb-0">Số lượng: {quantity}</p>
-          </Col>
-        </Row>
-      </div>
-    </Container>
+    <div style={{ 
+      backgroundColor: '#2c3e50', 
+      minHeight: '100vh',
+      padding: '50px 20px'
+    }}>
+      <Container style={{ maxWidth: '600px' }}>
+        <div style={{ 
+          backgroundColor: 'white',
+          padding: '40px',
+          borderRadius: '8px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.2)'
+        }}>
+          <h3 style={{ color: '#2c3e50', marginBottom: '40px', textAlign: 'center' }}>
+            Exercise 1: Chỉnh sửa số lượng sản phẩm
+          </h3>
+          
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            gap: '20px',
+            marginBottom: '30px'
+          }}>
+            <Button 
+              variant="danger" 
+              onClick={handleDecrease}
+              size="lg"
+              style={{ width: '50px', height: '50px', fontSize: '1.5rem' }}
+            >
+              -
+            </Button>
+            <input
+              type="number"
+              style={{ 
+                width: '100px', 
+                height: '50px',
+                textAlign: 'center',
+                fontSize: '1.3rem',
+                border: '2px solid #dee2e6',
+                borderRadius: '5px'
+              }}
+              value={quantity}
+              onChange={handleInputChange}
+              min="0"
+            />
+            <Button 
+              variant="success" 
+              onClick={handleIncrease}
+              size="lg"
+              style={{ width: '50px', height: '50px', fontSize: '1.5rem' }}
+            >
+              +
+            </Button>
+          </div>
+          
+          <p style={{ fontSize: '1.2rem', color: '#555', margin: 0, textAlign: 'center' }}>
+            Số lượng: <strong style={{ color: '#2c3e50' }}>{quantity}</strong>
+          </p>
+        </div>
+      </Container>
+    </div>
   );
 }
 
