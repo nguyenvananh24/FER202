@@ -33,15 +33,7 @@ const Header = () => {
 
                 <Navbar.Toggle aria-controls="main-navbar" />
                 <Navbar.Collapse id="main-navbar">
-                    {/* Nav links */}
-                    <Nav className="me-auto">
-                        <Nav.Link
-                            onClick={() => navigate('/movies')}
-                            className="text-white-75 fw-semibold"
-                        >
-                            🎥 Danh sách phim
-                        </Nav.Link>
-                    </Nav>
+                    <Nav className="me-auto" />
 
                     {/* User info */}
                     {currentUser ? (
