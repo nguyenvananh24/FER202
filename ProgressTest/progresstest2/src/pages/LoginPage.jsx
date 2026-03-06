@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { FiUser, FiLock, FiLogIn } from 'react-icons/fi';
-
-import expenseService from '../services/expenseService';
+import expenseService from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 
 function LoginPage() {
@@ -33,7 +31,7 @@ function LoginPage() {
     setAlertMsg('');
 
     if (!username.trim() && !password.trim()) {
-      setAlertMsg('Username and password are required.');
+      setAlertMsg('Username and password are required');
       setErrors({ username: 'Username is required.', password: 'Password is required.' });
       return;
     }
@@ -43,17 +41,13 @@ function LoginPage() {
     setLoading(true);
     try {
       const res = await expenseService.getUsers();
-      const users = res.data;
-
-      const user = users.find(
+      const user = res.data.find(
         (u) => u.username === username && u.password === password
       );
-
       if (!user) {
         setAlertMsg('Invalid username or password!');
         return;
       }
-
       login(user);
       navigate('/home');
     } catch {
@@ -66,86 +60,94 @@ function LoginPage() {
   return (
     <div
       className="d-flex align-items-center justify-content-center min-vh-100"
-      style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
+      style={{ background: '#fff' }}
     >
-      <Container>
-        <Row className="justify-content-center">
-          <Col xs={12} sm={10} md={7} lg={5}>
-            <Card className="shadow-lg border-0 rounded-4">
-              <Card.Body className="p-5">
-                <div className="text-center mb-4">
-                  <img
-                    src="/logo.jpg"
-                    alt="PersonalBudget logo"
-                    width={90}
-                    height={90}
-                    className="rounded-circle shadow mb-3"
-                    style={{ objectFit: 'cover', border: '3px solid #667eea' }}
-                  />
-                  <h3 className="fw-bold">Personal Budget</h3>
-                  <p className="text-muted">Sign in to manage your expenses</p>
-                </div>
+      <div
+        style={{
+          width: '100%',
+          maxWidth: 360,
+          padding: '36px 32px',
+          border: '1px solid #dee2e6',
+          borderRadius: 12,
+          boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
+          background: '#fff',
+        }}
+      >
+        {/* Title */}
+        <h2 className="text-center fw-bold mb-4" style={{ fontSize: '2rem' }}>
+          Login
+        </h2>
 
-                {alertMsg && (
-                  <Alert variant="danger" onClose={() => setAlertMsg('')} dismissible>
-                    {alertMsg}
-                  </Alert>
-                )}
+        {/* Alert */}
+        {alertMsg && (
+          <Alert
+            variant="danger"
+            onClose={() => setAlertMsg('')}
+            style={{
+              background: '#fce4e4',
+              border: '1px solid #f5c2c7',
+              color: '#842029',
+              borderRadius: 6,
+              fontSize: '0.9rem',
+              padding: '10px 14px',
+            }}
+          >
+            {alertMsg}
+          </Alert>
+        )}
 
-                <Form onSubmit={handleLogin} noValidate>
-                  <Form.Group className="mb-3">
-                    <Form.Label className="fw-semibold">
-                      <FiUser className="me-2" />
-                      Username
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      isInvalid={!!errors.username}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.username}
-                    </Form.Control.Feedback>
-                  </Form.Group>
+        <Form onSubmit={handleLogin} noValidate>
+          {/* Username */}
+          <Form.Group className="mb-3">
+            <Form.Label style={{ fontWeight: 500, fontSize: '0.95rem' }}>
+              Username
+            </Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              value={username}
+              onChange={(e) => { setUsername(e.target.value); setErrors((p) => ({ ...p, username: '' })); }}
+              isInvalid={!!errors.username}
+              style={{ borderRadius: 6 }}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.username}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-                  <Form.Group className="mb-4">
-                    <Form.Label className="fw-semibold">
-                      <FiLock className="me-2" />
-                      Password
-                    </Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Enter password (at least 6 characters)"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      isInvalid={!!errors.password}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.password}
-                    </Form.Control.Feedback>
-                  </Form.Group>
+          {/* Password */}
+          <Form.Group className="mb-1">
+            <Form.Label style={{ fontWeight: 500, fontSize: '0.95rem' }}>
+              Password
+            </Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="••••••"
+              value={password}
+              onChange={(e) => { setPassword(e.target.value); setErrors((p) => ({ ...p, password: '' })); }}
+              isInvalid={!!errors.password}
+              style={{ borderRadius: 6 }}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.password}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <div className="mb-4" style={{ fontSize: '0.82rem', color: '#6c757d' }}>
+            (at least 6 characters)
+          </div>
 
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    className="w-100 py-2 fw-semibold"
-                    disabled={loading}
-                  >
-                    {loading ? 'Signing in...' : (
-                      <>
-                        <FiLogIn className="me-2" />
-                        Login
-                      </>
-                    )}
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+          {/* Login button */}
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-100"
+            disabled={loading}
+            style={{ borderRadius: 6, padding: '10px 0', fontWeight: 500 }}
+          >
+            {loading ? 'Signing in...' : 'Login'}
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 }

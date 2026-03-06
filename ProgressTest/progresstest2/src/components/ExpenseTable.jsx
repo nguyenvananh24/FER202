@@ -1,6 +1,5 @@
 import React from 'react';
-import { Table, Button, Badge } from 'react-bootstrap';
-import { FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { Table, Button } from 'react-bootstrap';
 
 function formatDate(dateStr) {
   if (!dateStr) return '';
@@ -9,10 +8,7 @@ function formatDate(dateStr) {
 }
 
 function formatVND(amount) {
-  return Number(amount).toLocaleString('vi-VN', {
-    style: 'currency',
-    currency: 'VND',
-  });
+  return Number(amount).toLocaleString('vi-VN') + ' đ';
 }
 
 function ExpenseTable({ expenses, onEdit, onDelete }) {
@@ -26,42 +22,40 @@ function ExpenseTable({ expenses, onEdit, onDelete }) {
 
   return (
     <div className="table-responsive">
-      <Table hover className="mb-0 align-middle">
-        <thead className="table-primary">
+      <Table bordered hover className="mb-0 align-middle">
+        <thead>
           <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th className="text-center">Actions</th>
+            <th style={{ fontWeight: 700 }}>Name</th>
+            <th style={{ fontWeight: 700 }}>Amount</th>
+            <th style={{ fontWeight: 700 }}>Category</th>
+            <th style={{ fontWeight: 700 }}>Date</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {expenses.map((exp) => (
-            <tr key={exp.id}>
-              <td className="fw-semibold">{exp.name}</td>
-              <td className="text-danger fw-bold">{formatVND(exp.amount)}</td>
-              <td>
-                <Badge bg="info" text="dark" className="px-2 py-1">
-                  {exp.category}
-                </Badge>
-              </td>
+            <tr key={exp.id} style={{ background: '#f8f9fa' }}>
+              <td>{exp.name}</td>
+              <td>{formatVND(exp.amount)}</td>
+              <td>{exp.category}</td>
               <td>{formatDate(exp.date)}</td>
-              <td className="text-center">
+              <td className="text-center" style={{ whiteSpace: 'nowrap' }}>
                 <Button
-                  variant="outline-warning"
+                  variant="warning"
                   size="sm"
-                  className="me-2"
+                  className="me-1 text-white fw-bold"
+                  style={{ minWidth: 50 }}
                   onClick={() => onEdit(exp)}
                 >
-                  <FiEdit2 />
+                  Edit
                 </Button>
                 <Button
-                  variant="outline-danger"
+                  variant="danger"
                   size="sm"
+                  style={{ minWidth: 60 }}
                   onClick={() => onDelete(exp)}
                 >
-                  <FiTrash2 />
+                  Delete
                 </Button>
               </td>
             </tr>

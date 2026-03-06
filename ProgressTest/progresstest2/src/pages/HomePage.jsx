@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Alert } from 'react-bootstrap';
-import { FiPlusCircle } from 'react-icons/fi';
 import { useAuth } from '../contexts/AuthContext';
 import { useExpenses } from '../contexts/ExpenseContext';
-import expenseService from '../services/expenseService';
+import expenseService from '../services/api';
 import AppNavbar from '../components/AppNavbar';
 import TotalCard from '../components/TotalCard';
 import FilterCard from '../components/FilterCard';
@@ -96,43 +95,35 @@ function HomePage() {
   );
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100" style={{ background: '#fff' }}>
       <AppNavbar />
 
-      <div
-        className="min-vh-100 py-4"
-        style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}
-      >
-        <Container>
+      <div className="flex-grow-1 py-4" style={{ background: '#fff' }}>
+        <Container fluid="lg">
           {error && (
             <Alert variant="danger" onClose={() => setError(null)} dismissible>
               {error}
             </Alert>
           )}
 
-          <Row className="g-4">
-            {/* ── LEFT COLUMN ── */}
-            <Col xs={12} lg={4}>
-              <TotalCard
-                total={totalAmount}
-                loading={loading}
-                categoryFilter={categoryFilter}
-              />
+          {/* ── ROW 1: Total + Filter ── */}
+          <Row className="g-3 mb-3">
+            <Col xs={12} md={5}>
+              <TotalCard total={totalAmount} loading={loading} />
+            </Col>
+            <Col xs={12} md={7}>
+              <FilterCard categoryFilter={categoryFilter} onChange={setCategoryFilter} />
+            </Col>
+          </Row>
 
-              <FilterCard
-                categoryFilter={categoryFilter}
-                onChange={setCategoryFilter}
-              />
-
-              <Card className="shadow border-0 rounded-4">
-                <Card.Header
-                  className="fw-bold border-0 rounded-top-4"
-                  style={{ background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white' }}
-                >
-                  <FiPlusCircle className="me-2" />
-                  {editingExpense ? 'Edit Expense' : 'Add Expense'}
-                </Card.Header>
-                <Card.Body>
+          {/* ── ROW 2: Add Expense + Expense Management ── */}
+          <Row className="g-3">
+            <Col xs={12} md={5}>
+              <Card style={{ border: '1px solid #dee2e6', borderRadius: 8 }}>
+                <Card.Body className="py-4 px-4">
+                  <h5 className="fw-bold text-dark mb-3">
+                    {editingExpense ? 'Edit Expense' : 'Add Expense'}
+                  </h5>
                   <ExpenseForm
                     onSubmit={handleSubmitExpense}
                     editingExpense={editingExpense}
@@ -142,8 +133,7 @@ function HomePage() {
               </Card>
             </Col>
 
-            {/* ── RIGHT COLUMN ── */}
-            <Col xs={12} lg={8}>
+            <Col xs={12} md={7}>
               <ExpenseSection
                 expenses={filteredExpenses}
                 loading={loading}
@@ -157,10 +147,23 @@ function HomePage() {
 
       {/* ── FOOTER ── */}
       <footer
-        className="text-center py-3 text-white"
-        style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
+        style={{
+          background: '#f8f9fa',
+          borderTop: '1px solid #dee2e6',
+          padding: '14px 24px',
+        }}
       >
-        <small>© {new Date().getFullYear()} PersonalBudget — All rights reserved.</small>
+        <Container fluid="lg">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <small className="text-secondary">
+              © 2025{' '}
+              <span style={{ color: '#0d6efd' }}>PersonalBudget Demo</span>
+            </small>
+            <small className="text-secondary">
+              Built with React, Redux Toolkit &amp; JSON Server
+            </small>
+          </div>
+        </Container>
       </footer>
 
       <ConfirmModal
@@ -177,7 +180,7 @@ function HomePage() {
         variant={toast.variant}
         onClose={() => setToast({ ...toast, show: false })}
       />
-    </>
+    </div>
   );
 }
 
